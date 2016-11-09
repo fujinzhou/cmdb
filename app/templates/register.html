@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% block breadcrumb %}
+添加用户
+{% endblock %}
+{% block main %}
+
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>用户信息</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <!-- <form action="/adduser" method="POST" class="form-horizontal"> -->
+			    <form id="addform" class="form-horizontal">
+
+                            <div class="form-group">
+                                <label for="name" class="col-sm-2 control-label">用户名<span class="red-fonts">*</span></label>
+                                <div class="col-sm-8">
+                                    <input id="name" name="name" placeholder="用户名" type="text" class="form-control" aria-required="true" data-tip="输入用户名" class='inputxt' datatype='s4-16' errormsg='用户名最少4个字符，最多16个字符'/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="name_cn" class="col-sm-2 control-label">中文名<span class="red-fonts">*</span></label>
+                                <div class="col-sm-8">
+                                    <input id="name_cn" name="name_cn" placeholder="中文名" type="text" class="form-control" aria-required="true" data-tip="中文名" class='inputxt' datatype='s3-4' errormsg='中文名最少3个字符，最多4个字符'/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email" class="col-sm-2 control-label">邮箱</label>
+                                <div class="col-sm-8">
+                                    <input id="email"  name="email" placeholder="email" type="text" class="form-control" aria-required="true" data-tip="Email" class='inputxt' ignore='ignore' datatype='e' errormsg='必须是电子邮件格式'>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="mobile" class="col-sm-2 control-label">手机</label>
+                                <div class="col-sm-8">
+                                    <input  id="mobile" name="mobile" placeholder="mobile" type="text" class="form-control" aria-required="true" data-tip="手机号" class='inputxt' ignore='ignore' datatype='m' errormsg='手机号必须11位数字'/>
+                                </div>
+			   </div>
+
+
+                            <div class="form-group">
+                                <label for="password" class="col-sm-2 control-label">密码<span class="red-fonts"></span></label>
+                                <div class="col-sm-8">
+                                    <input id="password"  name="password" placeholder="密码" type="password" class="form-control" aria-required="true" data-tip="密码" class='inputxt' plugin='passwordStrength' datatype='*6-18' nullmsg='请设置密码' errormsg='密码最少6位，最多18位'/>
+				<td>
+                                    <div class="passwordStrength">
+                                        密码强度：
+                                        <span>弱</span>
+                                        <span>中</span>
+                                        <span class="last">强</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="Validform_checktip"></div>
+                                </td>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password" class="col-sm-2 control-label">确认密码</label>
+                                <div class="col-sm-8">
+                                    <input id="re_password" name="re_password" placeholder="再次确认密码" type="password" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="role" class="col-sm-2 control-label">角色</label>
+                                <div class="col-sm-8">
+				    <select name="role">
+                		    <option value="admin" class="form-control">管理员</option>
+                		    <option value="user" class="form-control">普通用户</option>
+           		  	    </select>
+                                </div>
+			   </div>
+				
+
+                            <div class="form-group">
+                                <label for="status" class="col-sm-2 control-label">状态</label>
+                                <div class="col-sm-8">
+                                    <select name="status">
+                                    <option value="0" class="form-control">激活</option>
+                                    <option value="1" class="form-control">锁定</option>
+                                    </select>
+                                </div>
+                           </div>
+
+
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button id="cancel_button" class="btn btn-white" type="submit">取消</button>
+                                    <button id="addbutton" class="btn btn-primary" type="submit">添加</button>
+                                </div>
+                            </div>
+                        </form>
+
+    			</form> 
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+<!--adduser -->
+<script src="/static/js/jquery-3.1.0.min.js"></script>
+<script>
+$('#addform').Validform({
+    tiptype:3,
+    usePlugin:{
+        passwordstrength:{
+            minLen:6,
+            maxLen:18
+        }
+    }
+})
+
+$('#addbutton').on('click',function(){
+     var str = $('#addform').serialize()
+     var strs=$('.Validform_wrong').text()
+    if(!strs){
+     $.post("/adduser",str,function(data){
+          data = JSON.parse(data)
+          if (data['code']==0){
+                swal({
+                        title:"注册成功",
+                        text: data['result'],
+                        type: "success",
+                        },function(){
+                                location.href="/userlist"
+                });
+          }else{
+            sweetAlert("my god",data['errmsg'],"error");
+           }
+     })
+      return false
+          }
+})
+
+$('#cancel_button').click(function(){
+    location.href='/userlist'
+})
+</script>
+{% endblock %}

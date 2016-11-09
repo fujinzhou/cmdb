@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block breadcrumb %}      
+更新用户                        
+{% endblock %}                  
+{% block main %}             
+
+    <div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-10">
+        <h2>更新用户</h2>
+        <ol class="breadcrumb">
+            <li>
+            
+                <a>用户管理</a>
+            
+            </li>
+            
+            <li class="active">
+                <strong>更新用户</strong>
+            </li>
+            
+        </ol>
+    </div>
+    <div class="col-sm-2">
+    </div>
+</div>
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-10">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>更新用户信息</h5>
+                    </div>
+                    <div class="ibox-content">
+                         <form action="/update" method="POST" class="form-horizontal">
+
+                            <div class="form-group">
+                                <label for="name" class="col-sm-2 control-label">用户名<span class="red-fonts">*</span></label>
+                                <div class="col-sm-8">
+                                    <input name="name" placeholder="用户名" type="text" class="form-control" value="{{user.name}}" readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="name_cn" class="col-sm-2 control-label">中文名<span class="red-fonts">*</span></label>
+                                <div class="col-sm-8">
+                                    <input name="name_cn" placeholder="中文名" type="text" class="form-control" value="{{user.name_cn}}" readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email" class="col-sm-2 control-label">邮箱</label>
+                                <div class="col-sm-8">
+                                    <input name="email" placeholder="email" type="text" class="form-control" value="{{ user.email}}">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="mobile" class="col-sm-2 control-label">手机</label>
+                                <div class="col-sm-8">
+                                    <input name="mobile" placeholder="mobile" type="text" class="form-control" value="{{ user.mobile }}">
+                                </div>
+			   </div>
+
+                            <div class="form-group">
+                                <label for="role" class="col-sm-2 control-label">角色</label>
+                                <div class="col-sm-8">
+				    <select name="role">
+                		    <option value="admin" class="form-control">管理员</option>
+                		    <option value="user" class="form-control">普通用户</option>
+           		  	    </select>
+                                </div>
+			   </div>
+				
+
+                            <div class="form-group">
+                                <label for="status" class="col-sm-2 control-label">状态</label>
+                                <div class="col-sm-8">
+                                    <select name="status">
+                                    <option value="0" class="form-control">激活</option>
+                                    <option value="1" class="form-control">锁定</option>
+                                    </select>
+                                </div>
+                           </div>
+
+
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-white" type="submit">取消</button>
+                                    <button id="submit_button" class="btn btn-primary" type="submit">更新</button>
+                                </div>
+                            </div>
+                        </form>
+
+    			</form> 
+                            
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
